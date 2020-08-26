@@ -1,6 +1,7 @@
 package tn.poste.data.project.entities;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import tn.poste.data.project.dto.BookDto;
 
 @Getter
 @Setter
@@ -35,4 +37,11 @@ public class AuthorEntity {
 	
 	@OneToMany(mappedBy = "author")
 	private List<BookEntity> books;
+	
+	
+	public List<BookDto> getBooks(){
+		return books.stream()
+					.map(book -> new BookDto(book.getTitle(), book.getIsbn()))
+					.collect(Collectors.toList());
+	}
 }
