@@ -2,6 +2,9 @@ package tn.poste.data.project.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthorDto {
 	
+	@NotNull(message = "Name must not be null")
 	private String name;
+	@NotBlank(message = "FirstName must exist")
 	private String firstName;
 	
 	private int telphoneNumber;

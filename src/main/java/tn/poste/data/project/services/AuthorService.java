@@ -2,6 +2,7 @@ package tn.poste.data.project.services;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import tn.poste.data.project.dto.AuthorDto;
+import tn.poste.data.project.entities.AddressEntity;
 import tn.poste.data.project.entities.AuthorEntity;
+import tn.poste.data.project.repos.AddressRepository;
 import tn.poste.data.project.repos.AuthorRepository;
 
 @Service
@@ -18,6 +21,7 @@ import tn.poste.data.project.repos.AuthorRepository;
 public class AuthorService {
 	
 	private AuthorRepository authorRepository;
+	private AddressRepository addressRepository;
 	private ModelMapper modelMapper;
 	
 	public List<AuthorEntity> getAll(){
@@ -37,12 +41,18 @@ public class AuthorService {
 			return modelMapper.map(author,AuthorDto.class);
 	}
 	
-	public AuthorEntity createAuthor(AuthorEntity author) {
+	public AuthorDto createAuthor(AuthorDto authorDto) {
+		AuthorEntity author = modelMapper.map(authorDto, AuthorEntity.class);
+		AddressEntity adEntity = modelMapper.map(authorDto.getAddress(), AddressEntity.class);
+		addressRepository.save(adEntity);
+		author.setBooks(new ArrayList<>());
+		author.setAddress(adEntity);
+		
 		if(author.getName() != null && author.getFirstName() != null)
 			author = authorRepository.save(author);
 		else
-			throw new RuntimeException(" Null Fields in the author");
-		return author;
+			throw new IllegalArgumentException(" Null Fields in the author");
+		return modelMapper.map(author, AuthorDto.class);
 	}
 	
 	public AuthorDto getByName(String name){
