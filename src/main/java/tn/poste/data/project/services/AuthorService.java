@@ -45,5 +45,12 @@ public class AuthorService {
 		return author;
 	}
 	
+	public AuthorDto getByName(String name){
+		
+			return modelMapper.map(authorRepository.findByName(name).get(0),AuthorDto.class);
+	}
+	
+	
+	
 
 }

@@ -9,12 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import tn.poste.data.project.dto.AddressDto;
 import tn.poste.data.project.dto.BookDto;
 
 @Getter
@@ -38,10 +40,22 @@ public class AuthorEntity {
 	@OneToMany(mappedBy = "author")
 	private List<BookEntity> books;
 	
+	@OneToOne
+	private AddressEntity address;
+	
 	
 	public List<BookDto> getBooks(){
 		return books.stream()
 					.map(book -> new BookDto(book.getTitle(), book.getIsbn()))
 					.collect(Collectors.toList());
+	}
+	
+	public AddressDto getAddress() {
+		return AddressDto.builder()
+						 .number(address.getNumber())
+						 .street(address.getStreet())
+						 .city(address.getCity())
+						 .build();
+							
 	}
 }

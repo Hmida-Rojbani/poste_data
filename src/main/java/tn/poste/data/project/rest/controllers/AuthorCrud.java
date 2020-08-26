@@ -31,6 +31,10 @@ public class AuthorCrud {
 		return authorService.getById(id);
 	}
 	
+	@GetMapping("/name/{name}")
+	public AuthorDto OneAuthor(@PathVariable("name") String name){
+		return authorService.getByName(name);
+	}
 	@PostMapping("/save")
 	public AuthorEntity saveAuthor(@RequestBody AuthorEntity auth) {
 		return authorService.createAuthor(auth);

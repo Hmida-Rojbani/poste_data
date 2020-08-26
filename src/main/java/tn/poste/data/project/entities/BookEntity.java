@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import tn.poste.data.project.dto.AuthorDto;
 
 
 @Entity
@@ -24,5 +25,9 @@ public class BookEntity {
 	
 	@ManyToOne
 	private AuthorEntity author;
+	
+	public AuthorDto getAuthor() {
+		return new AuthorDto(author.getName(), author.getFirstName(), author.getTelphoneNumber());
+	}
 
 }

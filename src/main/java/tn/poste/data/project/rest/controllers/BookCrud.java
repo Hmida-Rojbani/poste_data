@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import tn.poste.data.project.entities.BookEntity;
+import tn.poste.data.project.dto.BookDto;
 import tn.poste.data.project.services.BookService;
 
 @RestController
@@ -18,7 +18,7 @@ public class BookCrud {
 	private BookService bookService;
 	
 	@GetMapping("/all")
-	public List<BookEntity> getAll(){
+	public List<BookDto> getAll(){
 		return bookService.getAll();
 	}
 

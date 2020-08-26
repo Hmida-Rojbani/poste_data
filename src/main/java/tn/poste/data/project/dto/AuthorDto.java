@@ -17,5 +17,16 @@ public class AuthorDto {
 	private int telphoneNumber;
 
 	private List<BookDto> books;
+	
+	private AddressDto address;
+
+	public AuthorDto(String name, String firstName, int telphoneNumber) {
+		super();
+		this.name = name;
+		this.firstName = firstName;
+		this.telphoneNumber = telphoneNumber;
+	}
+	
+	
 
 }
